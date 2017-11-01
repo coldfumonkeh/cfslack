@@ -1,0 +1,11 @@
+{
+    "web":{
+        "host":"cfslack.local",
+        "http":{
+            "port":"80"
+        }
+    },
+    "app":{
+        "cfengine":"Lucee@5"
+    }
+}

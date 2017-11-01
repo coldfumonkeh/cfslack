@@ -1,0 +1,67 @@
+{
+    "name":"CFML Slack",
+    "slug":"cfslack",
+    "version":"1.0.0",
+    "author":"Matt Gifford (https://www.monkehworks.com)",
+    "location":"coldfumonkeh/cfslack#v1.0.0",
+    "directory":"",
+    "createPackageDirectory":"true",
+    "homepage":"https://github.com/coldfumonkeh/cfslack",
+    "documentation":"https://github.com/coldfumonkeh/cfslack",
+    "type":"projects",
+    "repository":{
+        "type":"git",
+        "URL":"https://github.com/coldfumonkeh/cfslack.git"
+    },
+    "bugs":"https://github.com/coldfumonkeh/cfslack/issues",
+    "shortDescription":"A ColdFusion component to interact with the Slack API.",
+    "keywords":[
+        "api"
+    ],
+    "scripts":{
+        "postVersion":"package set location='coldfumonkeh/cfslack#v`package version`'",
+        "onRelease":"publish",
+        "postPublish":"!git push --follow-tags"
+    },
+    "private":"false",
+    "ignore":[
+        "**/.*",
+        "test",
+        "tests"
+    ],
+    "testbox":{
+        "runner":[
+            {
+                "default":""
+            }
+        ],
+        "labels":[
+            
+        ],
+        "reporter":"",
+        "reporterResults":"",
+        "bundles":[
+            ""
+        ],
+        "directory":{
+            "mapping":"",
+            "recurse":true
+        },
+        "watchers":[
+            
+        ],
+        "notify":{
+            "emails":[
+                
+            ],
+            "growl":"",
+            "URL":""
+        }
+    },
+    "dependencies":{
+        "testbox":"^2.5.0+107"
+    },
+    "installPaths":{
+        "testbox":"testbox"
+    }
+}
