@@ -12,11 +12,11 @@ Instantiate the `slack.cfc` component and pass in the required properties like s
 
 ```
 var oSlack = new slack(
-	clientID 			= clientID,
-	clientSecret 		= clientSecret,
-	verificationToken 	= verificationToken,
-	accessToken			= accessToken,
-	botAccessToken		= botAccessToken
+	clientID          = clientID,
+	clientSecret      = clientSecret,
+	verificationToken = verificationToken,
+	accessToken       = accessToken,
+	botAccessToken    = botAccessToken
 );
 ```
 
