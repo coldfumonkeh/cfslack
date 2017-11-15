@@ -73,6 +73,32 @@ component accessors="true" extends="base" {
 	}
 
 	/**
+	* This method returns a portion of message events from the specified channel. To read the entire history for a channel, call the method with no latest or oldest arguments, and then continue paging using the instructions below. To retrieve a single message, specify its ts value as latest, set inclusive to true, and dial your count down to 1.
+	* @channel Channel to fetch history for.
+	* @latest End of time range of messages to include in results.
+	* @oldest Start of time range of messages to include in results.
+	* @inclusive Include messages with latest or oldest timestamp in results.
+	* @count Number of messages to return, between 1 and 1000.
+	* @unreads Include unread_count_display in the output?
+	* @deserialize Boolean value whether or not the response is returned as raw JSON or CF struct. Defaults to false.
+	*/
+	public function getChannelHistory(
+		required string channel,
+		string latest,
+		string oldest,
+		numeric inclusive   = 0,
+		numeric count       = 100,
+		boolean unreads     = true,
+		boolean deserialize = false
+	){
+		return super.makeRequest(
+			url         = 'channels.history',
+			params      = arguments,
+			deserialize = arguments.deserialize
+		);
+	}
+
+	/**
 	* This method returns information about a team channel.
 	* @channel Channel to get info on
 	* @deserialize Boolean value whether or not the response is returned as raw JSON or CF struct. Defaults to false.
@@ -88,6 +114,59 @@ component accessors="true" extends="base" {
 		);
 	}
 
+	/**
+	* This method is used to invite a user to a channel. The calling user must be a member of the channel.
+	* @channel Channel to get info on
+	* @user User to invite to channel.
+	* @deserialize Boolean value whether or not the response is returned as raw JSON or CF struct. Defaults to false.
+	*/
+	public function inviteToChannel(
+		required string channel,
+		required string user,
+		boolean deserialize = false
+	){
+		return makeRequest(
+			url         = 'channels.invite',
+			params      = arguments,
+			deserialize = arguments.deserialize
+		);
+	}
+
+	/**
+	* This method is used to join a channel. If the channel does not exist, it is created.
+	* @name Name of channel to create.
+	* @validate Whether to return errors on invalid channel name instead of modifying it to meet the specified criteria.
+	* @deserialize Boolean value whether or not the response is returned as raw JSON or CF struct. Defaults to false.
+	*/
+	public function joinChannel(
+		required string name,
+		boolean validate    = true,
+		boolean deserialize = false
+	){
+		return makeRequest(
+			url         = 'channels.join',
+			params      = arguments,
+			deserialize = arguments.deserialize
+		);
+	}
+
+	/**
+	* This method allows a user to remove another member from a team channel.
+	* @channel Channel to remove user from.
+	* @user User to invite to channel.
+	* @deserialize Boolean value whether or not the response is returned as raw JSON or CF struct. Defaults to false.
+	*/
+	public function kickFromChannel(
+		required string channel,
+		required string user,
+		boolean deserialize = false
+	){
+		return makeRequest(
+			url         = 'channels.kick',
+			params      = arguments,
+			deserialize = arguments.deserialize
+		);
+	}
 
 	/**
 	* This method is used to leave a channel.
@@ -228,87 +307,6 @@ component accessors="true" extends="base" {
 			deserialize = arguments.deserialize 
 		);
 	}
-
-	/**
-	* This method allows a user to remove another member from a team channel.
-	* @channel Channel to remove user from.
-	* @user User to invite to channel.
-	* @deserialize Boolean value whether or not the response is returned as raw JSON or CF struct. Defaults to false.
-	*/
-	public function kickFromChannel(
-		required string channel,
-		required string user,
-		boolean deserialize = false
-	){
-		return makeRequest(
-			url         = 'channels.kick',
-			params      = arguments,
-			deserialize = arguments.deserialize
-		);
-	}
-
-	/**
-	* This method is used to join a channel. If the channel does not exist, it is created.
-	* @name Name of channel to create.
-	* @validate Whether to return errors on invalid channel name instead of modifying it to meet the specified criteria.
-	* @deserialize Boolean value whether or not the response is returned as raw JSON or CF struct. Defaults to false.
-	*/
-	public function joinChannel(
-		required string name,
-		boolean validate    = true,
-		boolean deserialize = false
-	){
-		return makeRequest(
-			url         = 'channels.join',
-			params      = arguments,
-			deserialize = arguments.deserialize
-		);
-	}
-
-	/**
-	* This method is used to invite a user to a channel. The calling user must be a member of the channel.
-	* @channel Channel to get info on
-	* @user User to invite to channel.
-	* @deserialize Boolean value whether or not the response is returned as raw JSON or CF struct. Defaults to false.
-	*/
-	public function inviteToChannel(
-		required string channel,
-		required string user,
-		boolean deserialize = false
-	){
-		return makeRequest(
-			url         = 'channels.invite',
-			params      = arguments,
-			deserialize = arguments.deserialize
-		);
-	}
-
-	/**
-	* This method returns a portion of message events from the specified channel. To read the entire history for a channel, call the method with no latest or oldest arguments, and then continue paging using the instructions below. To retrieve a single message, specify its ts value as latest, set inclusive to true, and dial your count down to 1.
-	* @channel Channel to fetch history for.
-	* @latest End of time range of messages to include in results.
-	* @oldest Start of time range of messages to include in results.
-	* @inclusive Include messages with latest or oldest timestamp in results.
-	* @count Number of messages to return, between 1 and 1000.
-	* @unreads Include unread_count_display in the output?
-	* @deserialize Boolean value whether or not the response is returned as raw JSON or CF struct. Defaults to false.
-	*/
-	public function getChannelHistory(
-		required string channel,
-		string latest,
-		string oldest,
-		numeric inclusive   = 0,
-		numeric count       = 100,
-		boolean unreads     = true,
-		boolean deserialize = false
-	){
-		return super.makeRequest(
-			url         = 'channels.history',
-			params      = arguments,
-			deserialize = arguments.deserialize
-		);
-	}
-
 
 	/**
 	* Returns the properties as a struct
