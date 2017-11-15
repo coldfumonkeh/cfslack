@@ -78,6 +78,34 @@ component accessors="true" extends="base" {
 			deserialize = arguments.deserialize
 		);
 	}
+
+	/**
+	* Sends an ephemeral message to a user in a channel
+	* @channel Channel, private group, or IM channel to send message to. Can be an encoded ID, or a name
+	* @text Text of the message to send. See below for an explanation of formatting. This field is usually required, unless you're providing only attachments instead.
+	* @user id of the user who will receive the ephemeral message. The user should be in the channel specified by the channel argument.
+	* @as_user Pass true to post the message as the authed bot. Defaults to false.
+	* @attachments A JSON-based array of structured attachments, presented as a URL-encoded string.
+	* @link_names Find and link channel names and usernames.
+	* @parse Change how messages are treated. Defaults to none.
+	* @deserialize 
+	*/
+	public function postEphemeral(
+		required string channel,
+		required string text,
+		required string user,
+		boolean as_user         = false,
+		string attachments,
+		boolean link_names      = true,
+		string parse            = 'none',
+		boolean deserialize     = false
+	){
+		return makeRequest(
+			url         = 'chat.postEphemeral',
+			params      = arguments,
+			deserialize = arguments.deserialize
+		);
+	}
 	
 	/**
 	* This method posts a message to a public channel, private channel, or direct message/IM channel.
@@ -118,36 +146,6 @@ component accessors="true" extends="base" {
 			deserialize = arguments.deserialize
 		);
 	}
-	
-
-	/**
-	* Sends an ephemeral message to a user in a channel
-	* @channel Channel, private group, or IM channel to send message to. Can be an encoded ID, or a name
-	* @text Text of the message to send. See below for an explanation of formatting. This field is usually required, unless you're providing only attachments instead.
-	* @user id of the user who will receive the ephemeral message. The user should be in the channel specified by the channel argument.
-	* @as_user Pass true to post the message as the authed bot. Defaults to false.
-	* @attachments A JSON-based array of structured attachments, presented as a URL-encoded string.
-	* @link_names Find and link channel names and usernames.
-	* @parse Change how messages are treated. Defaults to none.
-	* @deserialize 
-	*/
-	public function postEphemeral(
-		required string channel,
-		required string text,
-		required string user,
-		boolean as_user         = false,
-		string attachments,
-		boolean link_names      = true,
-		string parse            = 'none',
-		boolean deserialize     = false
-	){
-		return makeRequest(
-			url         = 'chat.postEphemeral',
-			params      = arguments,
-			deserialize = arguments.deserialize
-		);
-	}
-
 
 	/**
 	* Provide custom unfurl behavior for user-posted URLs
@@ -155,7 +153,6 @@ component accessors="true" extends="base" {
 	public function unfurl(){ // TODO:
 
 	}
-
 
 	/**
 	* Updates a message
