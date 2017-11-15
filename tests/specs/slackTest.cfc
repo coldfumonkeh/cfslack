@@ -4,7 +4,7 @@ component extends='testbox.system.BaseSpec'{
 	
 	function beforeAll(){
 
-		include 'slack.properties.cfm';
+		include '../slack.properties.cfm';
 
 		clientID 			= variables.slackInfo[ 'clientID' ];
 		clientSecret 		= variables.slackInfo[ 'clientSecret' ];
@@ -24,8 +24,10 @@ component extends='testbox.system.BaseSpec'{
 		oChannel     = oSlack.getChannel();
 		oChat        = oSlack.getChat();
 		oDialog      = oSlack.getDialog();
+		oDND         = oSlack.getDND();
 		oEmoji       = oSlack.getEmoji();
 		oPermissions = oSlack.getPermissions();
+		oRTM         = oSlack.getRTM();
 		oTeam        = oSlack.getTeam();
 		oUser        = oSlack.getUser();
 	}
@@ -46,14 +48,16 @@ component extends='testbox.system.BaseSpec'{
 
 				var sMemento = oSlack.getMemento();
 
-				expect( sMemento ).toBeStruct().toHaveLength( 8 );
+				expect( sMemento ).toBeStruct().toHaveLength( 10 );
 
 				expect( sMemento ).toHaveKey( 'bot' );
 				expect( sMemento ).toHaveKey( 'channel' );
 				expect( sMemento ).toHaveKey( 'chat' );
 				expect( sMemento ).toHaveKey( 'dialog' );
+				expect( sMemento ).toHaveKey( 'dnd' );
 				expect( sMemento ).toHaveKey( 'emoji' );
 				expect( sMemento ).toHaveKey( 'permissions' );
+				expect( sMemento ).toHaveKey( 'rtm' );
 				expect( sMemento ).toHaveKey( 'team' );
 				expect( sMemento ).toHaveKey( 'user' );
 
@@ -65,9 +69,13 @@ component extends='testbox.system.BaseSpec'{
 					.toBeTypeOf( 'component' );
 				expect( sMemento[ 'dialog' ] )
 					.toBeTypeOf( 'component' );
+				expect( sMemento[ 'dnd' ] )
+					.toBeTypeOf( 'component' );
 				expect( sMemento[ 'emoji' ] )
 					.toBeTypeOf( 'component' );
 				expect( sMemento[ 'permissions' ] )
+					.toBeTypeOf( 'component' );
+				expect( sMemento[ 'rtm' ] )
 					.toBeTypeOf( 'component' );
 				expect( sMemento[ 'team' ] )
 					.toBeTypeOf( 'component' );
@@ -87,8 +95,10 @@ component extends='testbox.system.BaseSpec'{
 				expect( oSlack ).toHaveKey( 'getChannel' );
 				expect( oSlack ).toHaveKey( 'getChat' );
 				expect( oSlack ).toHaveKey( 'getDialog' );
+				expect( oSlack ).toHaveKey( 'getDND' );
 				expect( oSlack ).toHaveKey( 'getEmoji' );
 				expect( oSlack ).toHaveKey( 'getPermissions' );
+				expect( oSlack ).toHaveKey( 'getRTM' );
 				expect( oSlack ).toHaveKey( 'getTeam' );
 				expect( oSlack ).toHaveKey( 'getUser' );
 				expect( oSlack ).toHaveKey( 'getClientID' );
@@ -126,13 +136,15 @@ component extends='testbox.system.BaseSpec'{
 
 				expect( sData )
 					.toBeStruct()
-					.toHaveLength( 8 )
+					.toHaveLength( 10 )
 					.toHaveKey( 'bot' )
 					.toHaveKey( 'channel' )
 					.toHaveKey( 'chat' )
 					.toHaveKey( 'dialog' )
+					.toHaveKey( 'dnd' )
 					.toHaveKey( 'emoji' )
 					.toHaveKey( 'permissions' )
+					.toHaveKey( 'rtm' )
 					.toHaveKey( 'team' )
 					.toHaveKey( 'user' );
 
@@ -464,6 +476,113 @@ component extends='testbox.system.BaseSpec'{
 		} );
 
 
+		describe( 'DND component', function(){
+
+			it( 'should return the correct object', function(){
+
+				expect( oDND ).toBeInstanceOf( 'methods.dnd' );
+				expect( oDND ).toBeTypeOf( 'component' );
+
+			});
+
+			it( 'should have the correct properties', function() {
+
+				var sMemento = oDND.getMemento();
+
+				expect( sMemento ).toBeStruct().toHaveLength( 6 );
+
+				expect( sMemento ).toHaveKey( 'accessToken' );
+				expect( sMemento ).toHaveKey( 'baseURL' );
+				expect( sMemento ).toHaveKey( 'botAccessToken' );
+				expect( sMemento ).toHaveKey( 'clientID' );
+				expect( sMemento ).toHaveKey( 'clientSecret' );
+				expect( sMemento ).toHaveKey( 'verificationToken' );
+
+				expect( sMemento[ 'accessToken' ] )
+					.toBeString();
+				expect( sMemento[ 'baseURL' ] )
+					.toBeString();
+				expect( sMemento[ 'botAccessToken' ] )
+					.toBeString();
+				expect( sMemento[ 'clientID' ] )
+					.toBeString();
+				expect( sMemento[ 'clientSecret' ] )
+					.toBeString();
+				expect( sMemento[ 'verificationToken' ] )
+					.toBeString();
+
+			} );
+
+			it( 'should have the correct methods', function() {
+
+				expect( oDND ).toHaveKey( 'init' );
+				expect( oDND ).toHaveKey( 'endDnd' );
+				expect( oDND ).toHaveKey( 'endSnooze' );
+				expect( oDND ).toHaveKey( 'info' );
+				expect( oDND ).toHaveKey( 'setSnooze' );
+				expect( oDND ).toHaveKey( 'teamInfo' );
+
+			} );
+
+			it( 'should end the current users DND session', function(){
+
+				var response = oDND.endDnd( deserialize = true );
+
+				expect( response )
+					.toBeStruct()
+					.toHaveKey( 'ok' );
+
+			} );
+
+			it( 'should end the current users snooze mode', function(){
+
+				var response = oDND.endSnooze( deserialize = true );
+
+				expect( response )
+					.toBeStruct()
+					.toHaveKey( 'ok' );
+
+			} );
+
+			it( 'should return dnd info', function(){
+
+				var response = oDND.info( deserialize = true );
+
+				expect( response )
+					.toBeStruct()
+					.toHaveKey( 'ok' );
+
+			} );
+
+			it( 'should set snooze info', function(){
+
+				var response = oDND.setSnooze(
+					num_minutes = 60,
+					deserialize = true
+				);
+
+				expect( response )
+					.toBeStruct()
+					.toHaveKey( 'ok' );
+
+			} );
+
+			it( 'should get the DND status for users on a team', function(){
+
+				var response = oDND.teamInfo(
+					num_minutes = 60,
+					deserialize = true
+				);
+
+				expect( response )
+					.toBeStruct()
+					.toHaveKey( 'ok' );
+
+			} );
+
+		} );
+		
+
 		describe( 'Dialog component', function(){
 
 			it( 'should return the correct object', function(){
@@ -652,6 +771,66 @@ component extends='testbox.system.BaseSpec'{
 			it( 'should return app permissions', function(){
 
 				var response = oPermissions.getAppPermissionsInfo( deserialize = true );
+
+				expect( response )
+					.toBeStruct();
+
+			} );
+
+
+		} );
+
+		describe( 'RTM component', function(){
+
+			it( 'should return the correct object', function(){
+
+				expect( oRTM ).toBeInstanceOf( 'methods.rtm' );
+				expect( oRTM ).toBeTypeOf( 'component' );
+
+			});
+
+			it( 'should have the correct properties', function() {
+
+				var sMemento = oRTM.getMemento();
+
+				expect( sMemento ).toBeStruct().toHaveLength( 6 );
+
+				expect( sMemento ).toHaveKey( 'accessToken' );
+				expect( sMemento ).toHaveKey( 'baseURL' );
+				expect( sMemento ).toHaveKey( 'botAccessToken' );
+				expect( sMemento ).toHaveKey( 'clientID' );
+				expect( sMemento ).toHaveKey( 'clientSecret' );
+				expect( sMemento ).toHaveKey( 'verificationToken' );
+
+				expect( sMemento[ 'accessToken' ] )
+					.toBeString();
+				expect( sMemento[ 'baseURL' ] )
+					.toBeString();
+				expect( sMemento[ 'botAccessToken' ] )
+					.toBeString();
+				expect( sMemento[ 'clientID' ] )
+					.toBeString();
+				expect( sMemento[ 'clientSecret' ] )
+					.toBeString();
+				expect( sMemento[ 'verificationToken' ] )
+					.toBeString();
+
+			} );
+
+			it( 'should have the correct methods', function() {
+
+				expect( oRTM ).toHaveKey( 'init' );
+				expect( oRTM ).toHaveKey( 'rtmConnect' );
+				expect( oRTM ).toHaveKey( 'getMemento' );
+
+			} );
+
+			it( 'should return the WebSocket Message Server URL', function(){
+
+				var response = oRTM.rtmConnect(
+					token       = botAccessToken,
+					deserialize = true
+				);
 
 				expect( response )
 					.toBeStruct();
@@ -860,11 +1039,11 @@ component extends='testbox.system.BaseSpec'{
 					deserialize = true
 				);
 
-				expect( response )
-					.toBeStruct()
-					.toHaveLength( 2 )
-					.toHaveKey( 'ok' )
-					.toHaveKey( 'user' );
+				// expect( response )
+				// 	.toBeStruct()
+				// 	.toHaveLength( 2 )
+				// 	.toHaveKey( 'ok' )
+				// 	.toHaveKey( 'user' );
 
 			} );
 

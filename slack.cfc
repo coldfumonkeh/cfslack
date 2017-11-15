@@ -6,8 +6,10 @@ component accessors="true" extends="methods.base"{
 	property name="channel" type="any";
 	property name="chat" type="any";
 	property name="dialog" type="any";
+	property name="dnd" type="any";
 	property name="emoji" type="any";
 	property name="permissions" type="any";
+	property name="rtm" type="any";
 	property name="team" type="any";
 	property name="user" type="any";
 	
@@ -32,8 +34,10 @@ component accessors="true" extends="methods.base"{
 		setChannel( new methods.channel( argumentCollection = arguments ) );
 		setChat( new methods.chat( argumentCollection = arguments ) );
 		setDialog( new methods.dialog( argumentCollection = arguments ) );
+		setDND( new methods.dnd( argumentCollection = arguments ) );
 		setEmoji( new methods.emoji( argumentCollection = arguments ) );
 		setPermissions( new methods.permissions( argumentCollection = arguments ) );
+		setRTM( new methods.rtm( argumentCollection = arguments ) );
 		setTeam( new methods.team( argumentCollection = arguments ) );
 		setUser( new methods.user( argumentCollection = arguments ) );
 
