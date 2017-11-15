@@ -1,9 +1,9 @@
 {
     "name":"CFML Slack",
     "slug":"cfslack",
-    "version":"1.0.1",
+    "version":"1.0.2",
     "author":"Matt Gifford (https://www.monkehworks.com)",
-    "location":"coldfumonkeh/cfslack#v1.0.1",
+    "location":"coldfumonkeh/cfslack#v1.0.2",
     "directory":"",
     "createPackageDirectory":"true",
     "homepage":"https://github.com/coldfumonkeh/cfslack",
